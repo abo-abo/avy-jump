@@ -259,6 +259,10 @@ character read.  The default represents `C-h' and `DEL'.  See
   "List of characters that quit avy during `read-char'."
   :type 'list)
 
+(defcustom avy-dispatch-char ??
+  "The character to display action shortcuts in echo area."
+  :type 'character)
+
 (defvar avy-ring (make-ring 20)
   "Hold the window and point history.")
 
@@ -468,7 +472,7 @@ KEYS is the path from the root of `avy-tree' to LEAF."
           ((memq char avy-escape-chars)
            ;; exit silently
            (throw 'done 'abort))
-          ((eq char ??)
+          ((eq char avy-dispatch-char)
            (avy-show-dispatch-help)
            (throw 'done 'restart))
           ((mouse-event-p char)
@@ -478,7 +482,7 @@ KEYS is the path from the root of `avy-tree' to LEAF."
                     (if (characterp char) (string char) char))))))
 
 (defun avy-show-dispatch-help ()
-  "Display action shortucts in echo area."
+  "Display action shortcuts in echo area."
   (let ((len (length "avy-action-")))
     (message "%s" (mapconcat
                    (lambda (x)
