@@ -1601,6 +1601,15 @@ The case of CHAR is ignored."
                   (eq (downcase (char-after)) char)))))))
 
 ;;;###autoload
+(defun avy-goto-word-or-subword-0 ()
+  "Forward to `avy-goto-subword-0' or `avy-goto-word-0'.
+Which one depends on variable `subword-mode'."
+  (interactive)
+  (if (bound-and-true-p subword-mode)
+      (call-interactively #'avy-goto-subword-0)
+    (call-interactively #'avy-goto-word-0)))
+
+;;;###autoload
 (defun avy-goto-word-or-subword-1 ()
   "Forward to `avy-goto-subword-1' or `avy-goto-word-1'.
 Which one depends on variable `subword-mode'."
